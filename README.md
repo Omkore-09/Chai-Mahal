@@ -2,6 +2,8 @@
 
 **One cup, poured six ways.** A scroll-driven 3D showcase where a single teacup changes colour, strength, and character as you scroll through six teas from around the world — ending in a drag-to-rotate finale with all six side by side.
 
+Live Demo : https://chai-mahal.vercel.app/
+
 ![Chai Mahal preview](./docs/preview.png)
 
 Built as the same "interactive 3D + motion narrative" pattern as a hardware-product site, applied to something warmer: **React Three Fiber** for the 3D cup, **GSAP ScrollTrigger** for tying its rotation, camera, and liquid colour to scroll position.
