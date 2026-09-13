@@ -1,16 +1,17 @@
 :root {
   --bg: #12201a;
-  --bg-panel: #17251ef2;
-  --line: rgba(243, 236, 224, 0.1);
+  --bg-panel: #17251ef0;
+  --line: rgba(243, 236, 224, 0.12);
   --text-primary: #f3ece0;
-  --text-secondary: #a9b8ac;
-  --text-tertiary: #67766a;
-  --accent: #e8a33d;
-  --accent-dim: rgba(232, 163, 61, 0.16);
+  --text-secondary: #aab8ac;
+  --text-tertiary: #6d7c6f;
+  --accent: #e0a84a;
+  --accent-soft: rgba(224, 168, 74, 0.5);
   --rust: #c1502e;
 
-  --font-display: "Fraunces", serif;
-  --font-body: "Work Sans", sans-serif;
+  --font-display: "Cormorant Garamond", serif;
+  --font-body: "Jost", sans-serif;
+  --font-script: "Caveat", cursive;
 }
 
 * {
@@ -49,10 +50,22 @@ button {
   pointer-events: none;
   background: radial-gradient(
     ellipse at 60% 48%,
-    rgba(18, 32, 26, 0) 38%,
-    rgba(18, 32, 26, 0.5) 74%,
-    rgba(18, 32, 26, 0.9) 100%
+    rgba(18, 32, 26, 0) 34%,
+    rgba(18, 32, 26, 0.48) 74%,
+    rgba(18, 32, 26, 0.92) 100%
   );
+}
+
+/* Fine paper-like grain, purely decorative — keeps the flat dark
+   background from reading as a plain digital fill. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .no-webgl-fallback {
@@ -75,24 +88,35 @@ button {
 
 .mark {
   position: fixed;
-  top: 28px;
+  top: 30px;
   left: clamp(20px, 4vw, 56px);
   z-index: 2;
   display: flex;
   align-items: center;
   gap: 10px;
   font-family: var(--font-display);
+  font-style: italic;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 20px;
   letter-spacing: 0.01em;
   pointer-events: none;
 }
 
 .mark .leaf {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 0 60% 0 60%;
   background: var(--accent);
+}
+
+.mark-note {
+  font-family: var(--font-script);
+  font-weight: 500;
+  font-size: 19px;
+  font-style: normal;
+  color: var(--text-tertiary);
+  transform: rotate(-4deg);
+  margin-left: 2px;
 }
 
 /* ---------- Content ---------- */
@@ -122,56 +146,59 @@ button {
   text-align: center;
 }
 
+/* "Menu card" panel — a thin gold hairline instead of a hard border,
+   no corner radius, generous padding. Reads closer to a table card
+   than a UI component. */
 .panel {
+  position: relative;
   max-width: 440px;
   background: var(--bg-panel);
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  padding: 34px 36px;
-  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--accent-soft);
+  border-bottom: 1px solid var(--line);
+  padding: 38px 40px;
+  backdrop-filter: blur(10px);
 }
 
 .origin-tag {
-  display: inline-block;
-  font-family: var(--font-body);
+  display: block;
+  font-family: var(--font-display);
+  font-style: italic;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 16px;
   color: var(--accent);
-  background: var(--accent-dim);
-  border: 1px solid rgba(232, 163, 61, 0.32);
-  padding: 4px 10px;
-  border-radius: 100px;
-  margin-bottom: 18px;
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
 }
 
 .panel h2 {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(28px, 3.2vw, 36px);
-  line-height: 1.15;
-  margin: 0 0 14px;
+  font-size: clamp(32px, 3.6vw, 42px);
+  line-height: 1.1;
+  margin: 0 0 16px;
 }
 
 .panel p {
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: 15.5px;
+  line-height: 1.75;
   color: var(--text-secondary);
-  margin: 0 0 22px;
+  margin: 0 0 24px;
 }
 
 .specs {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px 20px;
+  gap: 16px 22px;
   border-top: 1px solid var(--line);
-  padding-top: 20px;
+  padding-top: 22px;
 }
 
 .spec dt {
-  font-size: 11px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 13px;
   color: var(--text-tertiary);
-  margin-bottom: 4px;
-  text-transform: lowercase;
+  margin-bottom: 3px;
 }
 
 .spec dd {
@@ -191,30 +218,33 @@ button {
 
 .hero h1 {
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(42px, 6.2vw, 78px);
-  line-height: 1.04;
-  margin: 0 0 22px;
+  font-weight: 500;
+  font-size: clamp(46px, 6.6vw, 86px);
+  line-height: 1.05;
+  margin: 0 0 24px;
 }
 
 .hero h1 em {
   font-style: italic;
+  font-weight: 600;
   color: var(--accent);
 }
 
 .hero p {
-  font-size: 17px;
+  font-size: 17.5px;
   max-width: 460px;
   color: var(--text-secondary);
-  line-height: 1.7;
-  margin: 0 0 30px;
+  line-height: 1.75;
+  margin: 0 0 32px;
 }
 
 .scroll-cue {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-size: 13px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 15px;
   color: var(--text-tertiary);
 }
 
@@ -254,20 +284,20 @@ button {
 /* ---------- Tea label tags (finale) ---------- */
 
 .tea-tag {
-  font-family: var(--font-body);
+  font-family: var(--font-display);
+  font-style: italic;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-primary);
-  background: rgba(18, 32, 26, 0.85);
-  border: 1px solid var(--line);
-  padding: 5px 10px;
-  border-radius: 100px;
+  background: rgba(18, 32, 26, 0.88);
+  border-bottom: 1px solid var(--accent-soft);
+  padding: 5px 12px;
   white-space: nowrap;
   transform: translate(10px, -50%);
 }
 
 .tea-tag em {
-  font-style: normal;
+  font-style: italic;
   color: var(--accent);
 }
 
@@ -286,21 +316,22 @@ button {
 
 .footer-copy {
   background: var(--bg-panel);
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  backdrop-filter: blur(8px);
-  padding: 30px 40px;
+  border-top: 1px solid var(--accent-soft);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+  padding: 34px 44px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
+  gap: 20px;
   max-width: 560px;
 }
 
 .footer h2 {
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(30px, 4vw, 46px);
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(32px, 4.2vw, 50px);
   max-width: 620px;
   margin: 0;
 }
@@ -309,24 +340,27 @@ button {
   color: var(--text-secondary);
   max-width: 460px;
   margin: 0;
-  line-height: 1.7;
+  line-height: 1.75;
+  font-size: 15.5px;
 }
 
 .cta-btn {
   font-weight: 500;
   font-size: 14px;
+  letter-spacing: 0.03em;
   color: #1c1305;
   background: var(--accent);
   border: none;
-  padding: 13px 28px;
-  border-radius: 100px;
+  padding: 14px 30px;
   cursor: pointer;
 }
 
 .footer .meta {
-  font-size: 12px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
   color: var(--text-tertiary);
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 /* ---------- Responsive ---------- */

@@ -10,7 +10,6 @@ const ceramic = (color, opts = {}) =>
     ...opts,
   });
 
-
 export default function TeaCup({ partsRef, onReady }) {
   const group = useRef();
   const cup = useRef();
@@ -22,6 +21,11 @@ export default function TeaCup({ partsRef, onReady }) {
       cup: ceramic("#f3ece0", { roughness: 0.4 }),
       cupInner: ceramic("#e4d9c6", { roughness: 0.5 }),
       saucer: ceramic("#f3ece0", { roughness: 0.4 }),
+      gold: new THREE.MeshStandardMaterial({
+        color: "#d8b46a",
+        metalness: 0.85,
+        roughness: 0.28,
+      }),
       liquid: new THREE.MeshStandardMaterial({
         color: "#c97c3d",
         metalness: 0.15,
@@ -51,6 +55,10 @@ export default function TeaCup({ partsRef, onReady }) {
       <mesh position={[0, -0.42, 0]} material={materials.saucer} receiveShadow>
         <cylinderGeometry args={[0.85, 0.85, 0.05, 40]} />
       </mesh>
+      {/* Gold rim on the saucer's edge */}
+      <mesh position={[0, -0.395, 0]} material={materials.gold} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[0.85, 0.012, 8, 56]} />
+      </mesh>
 
       {/* Cup body */}
       <group ref={cup}>
@@ -64,6 +72,10 @@ export default function TeaCup({ partsRef, onReady }) {
         {/* base disc so the cup doesn't read as hollow from the side */}
         <mesh position={[0, -0.41, 0]} material={materials.cup}>
           <cylinderGeometry args={[0.32, 0.32, 0.02, 40]} />
+        </mesh>
+        {/* Gold rim trim at the lip — the one signature "premium" detail */}
+        <mesh position={[0, 0.14, 0]} material={materials.gold} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.435, 0.01, 8, 48]} />
         </mesh>
 
         {/* Liquid surface — colour driven by the scroll timeline */}

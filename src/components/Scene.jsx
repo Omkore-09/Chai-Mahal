@@ -1,6 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { ContactShadows, Html, OrbitControls } from "@react-three/drei";
 import TeaCup from "./TeaCup";
+import { Plate, SpiceCluster, SugarCubes, ScatterLeaves, teaLeafLayout, petalLayout } from "./TeaAccessories";
 import { teas } from "../content";
 
 const labelPositions = teas.map((t, i) => {
@@ -9,7 +10,19 @@ const labelPositions = teas.map((t, i) => {
   return [Math.cos(angle) * r, -0.05, Math.sin(angle) * r];
 });
 
-export default function Scene({ partsRef, labelsRef, sceneRootRef, cameraRef, controlsRef, onReady }) {
+export default function Scene({
+  partsRef,
+  labelsRef,
+  sceneRootRef,
+  cameraRef,
+  controlsRef,
+  onReady,
+  plateRef,
+  spicesRef,
+  sugarRef,
+  leavesRef,
+  petalsRef,
+}) {
   return (
     <Canvas
       dpr={[1, 1.8]}
@@ -38,6 +51,11 @@ export default function Scene({ partsRef, labelsRef, sceneRootRef, cameraRef, co
 
       <group ref={sceneRootRef}>
         <TeaCup partsRef={partsRef} onReady={onReady} />
+        <Plate partsRef={plateRef} />
+        <SpiceCluster partsRef={spicesRef} />
+        <SugarCubes partsRef={sugarRef} />
+        <ScatterLeaves partsRef={leavesRef} color="#6b9a52" layout={teaLeafLayout} />
+        <ScatterLeaves partsRef={petalsRef} color="#f5e9c8" layout={petalLayout} />
 
         {teas.map((t, i) => (
           <Html

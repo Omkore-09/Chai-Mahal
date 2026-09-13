@@ -26,13 +26,13 @@ export default function App() {
   const cameraRef = useRef(null);
   const controlsRef = useRef(null);
   const labelsRef = useRef({});
+  const plateRef = useRef(null);
+  const spicesRef = useRef(null);
+  const sugarRef = useRef(null);
+  const leavesRef = useRef(null);
+  const petalsRef = useRef(null);
 
-  // One stable container of {current: null} ref-shaped objects — built
-  // once (useRef's initial value is only used on the first render), and
-  // populated via plain callback refs below. Avoids calling useRef
-  // inside .map (which only "works" because the tea list is static; it
-  // still breaks the rules of hooks) while keeping every id's ref object
-  // stable across re-renders.
+
   const sectionRefs = useRef(
     Object.fromEntries(
       [...teas.map((t) => t.id), "atlas"].map((id) => [id, { current: null }])
@@ -51,6 +51,11 @@ export default function App() {
     pageRef,
     groupRef,
     ready: modelReady,
+    plateRef,
+    spicesRef,
+    sugarRef,
+    leavesRef,
+    petalsRef,
   });
 
   return (
@@ -64,6 +69,11 @@ export default function App() {
             cameraRef={cameraRef}
             controlsRef={controlsRef}
             onReady={handleModelReady}
+            plateRef={plateRef}
+            spicesRef={spicesRef}
+            sugarRef={sugarRef}
+            leavesRef={leavesRef}
+            petalsRef={petalsRef}
           />
         </div>
       ) : (
@@ -72,10 +82,12 @@ export default function App() {
         </div>
       )}
       <div className="canvas-vignette" />
+      <div className="grain" />
 
       <div className="mark">
         <span className="leaf" />
         Chai Mahal
+        <span className="mark-note">today's pour</span>
       </div>
 
       <div className="content" ref={pageRef}>
